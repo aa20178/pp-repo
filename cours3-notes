@@ -1,0 +1,33 @@
+1 communicateurc'est l'univers o* on fait la communication,  contient des contextes de communiccation, des groupes de processes mpi...
+
+Duplication de communicateur :MPI_Comm_dup(MPI_Comm comm, MPI_Comm *newcomm)
+Il faut découper commworld. comm_self c'est le communicateur pour son propre rang.
+ int MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm)
+on va découper les rangs qui ont la meme couleur.
+exemple : avec 5 rangs : MPI_Comm_split(MPI_COMM_WORLD, r%2, r, &c). On sépare en (r1,r3) pour les impairs et (r0,r2,r4) pour les pairs.
+
+-creer un comm a partir de groupe de processus : grace a un ancien comm, un sous-groupe qui contient des processus : int MPI_Comm_create(MPI_Comm comm, MPI_Group group, MPI_Comm *newcomm) 
+il faut que tous les processus de comm appellement la fonction (c'est un collective).
+
+
+autre fonction : int MPI_Comm_create_group(MPI_Comm comm, MPI_Group group, int tag, MPI_Comm * newcomm)
+comparer 2 communicateurs : 
+int MPI_Comm_compare(MPI_Comm comm1, MPI_Comm comm2, int *result)
+Intracommunicateur : un group et un contexte, défini pour échanger des messages entre plusieurs groupes..
+
+...
+
+Envoi de blocks homogenes espacés ( spaced homogeneous blocks)
+MPI_Type_vector : permet la réplocation d'un ancien datatype sur des lieux equitablement espacés.
+
+exemple : 
+MPI_Datatype mytype (disons double) ;
+MPI_Type_Vector(3,4,5, MPI_Double, &mytype);
+MPI_Type_commit(&mytype);
+  
+
+___
+
+
+
+
